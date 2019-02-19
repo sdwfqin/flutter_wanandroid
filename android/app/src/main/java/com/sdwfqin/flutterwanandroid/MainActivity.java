@@ -11,5 +11,10 @@ public class MainActivity extends FlutterActivity {
     GeneratedPluginRegistrant.registerWith(this);
 
     //codeing...
+
+
+
+    // this is init ...
+
   }
 }
