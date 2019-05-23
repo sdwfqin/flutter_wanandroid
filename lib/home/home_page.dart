@@ -67,7 +67,7 @@ class _HeadViewState extends State<HeadView> {
         itemCount: count,
         autoplay: true,
         pagination: new SwiperPagination(),
-//        control: new SwiperControl(),
+        // control: new SwiperControl(),
       ),
       height: 200.0,
     );

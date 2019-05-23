@@ -10,16 +10,16 @@ description: 玩Android-Flutter版
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # 网络
-  dio: ^1.0.9
+  dio: ^2.1.5
   # 轮播图
-  flutter_swiper : ^1.1.4
+  flutter_swiper : ^1.1.6
   # 序列化
   json_annotation: ^2.0.0
 
