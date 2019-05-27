@@ -4,6 +4,11 @@ import 'package:flutter_wanandroid/me/me_page.dart';
 import 'package:flutter_wanandroid/project/project_page.dart';
 import 'package:flutter_wanandroid/tree/tree_page.dart';
 
+/// Created with Android Studio.
+/// User: 张钦
+/// Date: 2018-11-01
+/// email: sdwfqin@gmail.com
+/// target:
 class IndexPage extends StatefulWidget {
   @override
   State createState() {

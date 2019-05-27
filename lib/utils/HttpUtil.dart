@@ -21,7 +21,7 @@ class HttpUtil {
     // 或者通过传递一个 `options`来创建dio实例
     options = BaseOptions(
       // 请求基地址,可以包含子路径，如: "https://www.google.com/api/".
-      baseUrl: "http://www.wanandroid.com/",
+      baseUrl: "https://www.wanandroid.com/",
       //连接服务器超时时间，单位是毫秒.
       connectTimeout: 10000,
 

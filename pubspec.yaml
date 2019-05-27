@@ -21,7 +21,7 @@ dependencies:
   # 轮播图
   flutter_swiper : ^1.1.6
   # 序列化
-  json_annotation: ^2.0.0
+  json_annotation: ^2.4.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,8 +32,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # 序列化
-  build_runner: ^1.0.0
-  json_serializable: ^2.0.0
+  # 生成dart代码 => flutter packages pub run build_runner build
+  build_runner: ^1.4.0
+  json_serializable: ^3.0.0
 
 
 # For information on the generic Dart part of this file, see the
