@@ -63,7 +63,6 @@ class _BodyViewState extends State<BodyView> {
 
   // 列表项
   Widget _buildListItem(BuildContext context, int index) {
-//    return ListTile(title: Text(data[index].title));
     return Container(
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
