@@ -52,17 +52,37 @@ class _BodyViewState extends State<BodyView> {
           child: new HeadView(),
         ),
         // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
-        SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(_buildListItem,
-                childCount: data.length),
-            itemExtent: 48.0)
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          _buildListItem,
+          childCount: data.length,
+        ))
       ],
     );
   }
 
   // 列表项
   Widget _buildListItem(BuildContext context, int index) {
-    return ListTile(title: Text(data[index].title));
+//    return ListTile(title: Text(data[index].title));
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
+      decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: Color(0xFFCCCCCC))),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(data[index].title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18.0,
+                )),
+          ]),
+    );
   }
 
   /// 加载数据
