@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid/home/model/homelist/HomeListItemBean.dart';
 import 'package:flutter_wanandroid/home/model/homelist/HomeListMainBean.dart';
 import 'package:flutter_wanandroid/utils/HttpUtil.dart';
 import 'package:flutter_wanandroid/utils/HttpConstants.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// Created with Android Studio.
 /// User: 张钦
@@ -32,32 +33,41 @@ class BodyView extends StatefulWidget {
 }
 
 class _BodyViewState extends State<BodyView> {
+  RefreshController _refreshController;
+
   List<HomeListItemBean> data = [];
-  bool isOver = false;
   int currentPager = 0;
 
   @override
   void initState() {
+    _refreshController = RefreshController();
     _getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      // 默认居中对齐
-      slivers: <Widget>[
-        // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
-        SliverToBoxAdapter(
-          child: new HeadView(),
-        ),
-        // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
-        SliverList(
-            delegate: SliverChildBuilderDelegate(
-          _buildListItem,
-          childCount: data.length,
-        ))
-      ],
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: CustomScrollView(
+        // 默认居中对齐
+        slivers: <Widget>[
+          // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
+          SliverToBoxAdapter(
+            child: new HeadView(),
+          ),
+          // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+            _buildListItem,
+            childCount: data.length,
+          ))
+        ],
+      ),
     );
   }
 
@@ -84,16 +94,42 @@ class _BodyViewState extends State<BodyView> {
     );
   }
 
+  void _onRefresh() {
+    setState(() {
+      currentPager = 0;
+    });
+    _getData();
+  }
+
+  void _onLoading() {
+    _getData();
+  }
+
   /// 加载数据
   void _getData() async {
     var response = await HttpUtil().get("article/list/$currentPager/json");
     var homeListMainBean = new HomeListMainBean.fromJson(response);
+
     // setState 相当于 runOnUiThread
     setState(() {
-      data = homeListMainBean.data.datas;
-      isOver = homeListMainBean.data.over;
+      if (currentPager == 0) {
+        data = homeListMainBean.data.datas;
+        _refreshController.refreshCompleted();
+      } else {
+        data.addAll(homeListMainBean.data.datas);
+        _refreshController.loadComplete();
+      }
       currentPager = currentPager + 1;
     });
+
+    if (homeListMainBean.data.over) {
+      _refreshController.loadNoData();
+    }
+  }
+
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 }
 
