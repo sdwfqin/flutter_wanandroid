@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_wanandroid/components/ProgressDialog.dart';
+import 'package:flutter_wanandroid/components/progress_dialog.dart';
+import 'package:flutter_wanandroid/components/webview_page.dart';
 import 'package:flutter_wanandroid/home/model/banner/HomeBanner.dart';
 import 'package:flutter_wanandroid/home/model/banner/HomeListBanner.dart';
 import 'package:flutter_wanandroid/home/model/homelist/HomeListItemBean.dart';
@@ -83,103 +84,115 @@ class _BodyViewState extends State<BodyView> {
 
   // 列表项
   Widget _buildListItem(BuildContext context, int index) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                // 作者前边的小icon
-                Image(
-                    image: AssetImage("images/me.png"),
-                    width: 12.0,
-                    height: 12.0,
-                    alignment: Alignment.center),
-                // 作者
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
-                    child: Text(data[index].author,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
-                        )),
-                  ),
-                ),
-                // 分类
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                        data[index].superChapterName +
-                            "/" +
-                            data[index].chapterName,
-                        textAlign: TextAlign.end,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 14.0,
-                        )),
-                  ),
-                ),
-              ],
-            ),
-            // 标题
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-              child: Text(data[index].title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.0,
-                  )),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                // 收藏
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Image(
-                      image: AssetImage("images/collect_no.png"),
-                      width: 20.0,
-                      height: 20.0,
+    var itemData = data[index];
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) =>
+                new WebViewPage(itemData.title, itemData.link),
+          ),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // 作者前边的小icon
+                  Image(
+                      image: AssetImage("images/me.png"),
+                      width: 12.0,
+                      height: 12.0,
+                      alignment: Alignment.center),
+                  // 作者
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                      child: Text(itemData.author,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14.0,
+                          )),
                     ),
                   ),
-                ),
-                // 发布时间
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Text(data[index].niceDate,
-                        textAlign: TextAlign.end,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
-                        )),
+                  // 分类
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                          itemData.superChapterName +
+                              "/" +
+                              itemData.chapterName,
+                          textAlign: TextAlign.end,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 14.0,
+                          )),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ]),
+                ],
+              ),
+              // 标题
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                child: Text(itemData.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                    )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // 收藏
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Image(
+                        image: AssetImage("images/collect_no.png"),
+                        width: 20.0,
+                        height: 20.0,
+                      ),
+                    ),
+                  ),
+                  // 发布时间
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(itemData.niceDate,
+                          textAlign: TextAlign.end,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14.0,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ]),
+      ),
     );
   }
 
@@ -264,6 +277,15 @@ class _HeadViewState extends State<HeadView> {
         itemCount: count,
         autoplay: true,
         pagination: new SwiperPagination(),
+        onTap: (index) {
+          Navigator.push(
+            context,
+            new MaterialPageRoute(
+              builder: (context) =>
+              new WebViewPage(data[index].title, data[index].url),
+            ),
+          );
+        },
       ),
       height: 200.0,
     );
