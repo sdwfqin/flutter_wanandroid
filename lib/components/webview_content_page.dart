@@ -7,22 +7,22 @@ import 'package:webview_flutter/webview_flutter.dart';
 /// Date: 2019-05-29
 /// email: sdwfqin@gmail.com
 /// target: WebView
-class WebViewPage extends StatefulWidget {
+class WebViewContentPage extends StatefulWidget {
   final String title;
   final String url;
 
-  WebViewPage(this.title, this.url);
+  WebViewContentPage(this.title, this.url);
 
   @override
-  _WebViewPageState createState() => new _WebViewPageState(title, url);
+  _WebViewContentPageState createState() => new _WebViewContentPageState(title, url);
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _WebViewContentPageState extends State<WebViewContentPage> {
   final String title;
   final String url;
   bool loading = true;
 
-  _WebViewPageState(this.title, this.url);
+  _WebViewContentPageState(this.title, this.url);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _WebViewPageState extends State<WebViewPage> {
                 loading = false;
               });
             },
-            javascriptMode: JavascriptMode.unrestricted,
+            javascriptMode: JavascriptMode.disabled,
           )),
     );
   }

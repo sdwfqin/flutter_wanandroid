@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/components/progress_dialog.dart';
-import 'package:flutter_wanandroid/components/webview_page.dart';
+import 'package:flutter_wanandroid/components/webview_content_page.dart';
 import 'package:flutter_wanandroid/home/model/banner/HomeBanner.dart';
 import 'package:flutter_wanandroid/home/model/banner/HomeListBanner.dart';
 import 'package:flutter_wanandroid/home/model/homelist/HomeListItemBean.dart';
@@ -91,7 +91,7 @@ class _BodyViewState extends State<BodyView> {
           context,
           new MaterialPageRoute(
             builder: (context) =>
-                new WebViewPage(itemData.title, itemData.link),
+                new WebViewContentPage(itemData.title, itemData.link),
           ),
         );
       },
@@ -282,7 +282,7 @@ class _HeadViewState extends State<HeadView> {
             context,
             new MaterialPageRoute(
               builder: (context) =>
-              new WebViewPage(data[index].title, data[index].url),
+                  new WebViewContentPage(data[index].title, data[index].url),
             ),
           );
         },
