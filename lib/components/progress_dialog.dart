@@ -21,12 +21,12 @@ class ProgressDialog extends StatelessWidget {
 
   ProgressDialog(
       {Key key,
-        @required this.loading,
-        this.msg,
-        this.progress = const CircularProgressIndicator(),
-        this.alpha = 0.6,
-        this.textColor = Colors.white,
-        @required this.child})
+      @required this.loading,
+      this.msg,
+      this.progress = const CircularProgressIndicator(),
+      this.alpha = 0.6,
+      this.textColor = Colors.white,
+      @required this.child})
       : assert(child != null),
         assert(loading != null),
         super(key: key);
@@ -68,7 +68,8 @@ class ProgressDialog extends StatelessWidget {
       }
       widgetList.add(Opacity(
         opacity: alpha,
-        child: new ModalBarrier(color: Colors.black87),
+        // dismissible默认为true，点击pop
+        child: new ModalBarrier(color: Colors.black87, dismissible: false),
       ));
       widgetList.add(layoutProgress);
     }

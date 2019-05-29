@@ -33,20 +33,19 @@ class _WebViewPageState extends State<WebViewPage> {
         ),
       ),
       body: ProgressDialog(
-        // 第一次进入有动画
-        loading: loading,
-        msg: "正在加载中",
-        alpha: 0,
-        child: WebView(
-          initialUrl: url,
-          onPageFinished: (url) {
-            setState(() {
-              loading = false;
-            });
-          },
-          javascriptMode: JavascriptMode.unrestricted,
-        ),
-      ),
+          // 第一次进入有动画
+          loading: loading,
+          msg: "正在加载中",
+          alpha: 0,
+          child: WebView(
+            initialUrl: url,
+            onPageFinished: (url) {
+              setState(() {
+                loading = false;
+              });
+            },
+            javascriptMode: JavascriptMode.unrestricted,
+          )),
     );
   }
 }
