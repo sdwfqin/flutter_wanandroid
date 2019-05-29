@@ -25,6 +25,16 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+
+    signingConfigs {
+        sdwfqinSigning {
+            keyAlias 'sdwfqin'
+            keyPassword 'sdwfqin.com'
+            storeFile file('sdwfqin.jks')
+            storePassword 'sdwfqin.com'
+        }
+    }
+
     compileSdkVersion 28
 
     lintOptions {
@@ -43,9 +53,10 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.sdwfqinSigning
+        }
+        debug {
+            signingConfig signingConfigs.sdwfqinSigning
         }
     }
 }

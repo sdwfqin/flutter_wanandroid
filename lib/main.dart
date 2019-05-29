@@ -19,7 +19,7 @@ class WanAndroid extends StatelessWidget {
         '/': (context) => SplashPage(),
         '/index': (context) => IndexPage(),
       },
-      title: '玩Android',
+      title: '玩Android-Flutter版',
     );
   }
 }
