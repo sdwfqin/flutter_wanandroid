@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_wanandroid/components/ProgressDialog.dart';
 import 'package:flutter_wanandroid/home/model/banner/HomeBanner.dart';
 import 'package:flutter_wanandroid/home/model/banner/HomeListBanner.dart';
 import 'package:flutter_wanandroid/home/model/homelist/HomeListItemBean.dart';
 import 'package:flutter_wanandroid/home/model/homelist/HomeListMainBean.dart';
-import 'package:flutter_wanandroid/utils/HttpUtil.dart';
 import 'package:flutter_wanandroid/utils/HttpConstants.dart';
+import 'package:flutter_wanandroid/utils/HttpUtil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// Created with Android Studio.
@@ -39,6 +40,7 @@ class _BodyViewState extends State<BodyView> {
 
   List<HomeListItemBean> data = [];
   int currentPager = 0;
+  bool loading = true;
 
   @override
   void initState() {
@@ -49,26 +51,32 @@ class _BodyViewState extends State<BodyView> {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: true,
-      controller: _refreshController,
-      onRefresh: _onRefresh,
-      onLoading: _onLoading,
-      child: CustomScrollView(
-        // 默认居中对齐
-        slivers: <Widget>[
-          // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
-          SliverToBoxAdapter(
-            child: new HeadView(),
-          ),
-          // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
-          SliverList(
-              delegate: SliverChildBuilderDelegate(
-            _buildListItem,
-            childCount: data.length,
-          ))
-        ],
+    return ProgressDialog(
+      // 第一次进入有动画
+      loading: loading,
+      msg: "正在加载中",
+      alpha: 0,
+      child: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: CustomScrollView(
+          // 默认居中对齐
+          slivers: <Widget>[
+            // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
+            SliverToBoxAdapter(
+              child: new HeadView(),
+            ),
+            // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+              _buildListItem,
+              childCount: data.length,
+            ))
+          ],
+        ),
       ),
     );
   }
@@ -196,6 +204,7 @@ class _BodyViewState extends State<BodyView> {
       if (currentPager == 0) {
         data = homeListMainBean.data.datas;
         _refreshController.refreshCompleted();
+        loading = false;
       } else {
         data.addAll(homeListMainBean.data.datas);
         _refreshController.loadComplete();
