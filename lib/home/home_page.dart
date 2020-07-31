@@ -213,6 +213,7 @@ class _BodyViewState extends State<BodyView> {
     var homeListMainBean = new HomeListMainBean.fromJson(response);
 
     // setState 相当于 runOnUiThread
+    // _refreshController 是分页组件用的
     setState(() {
       if (currentPager == 0) {
         data = homeListMainBean.data.datas;

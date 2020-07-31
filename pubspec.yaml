@@ -10,27 +10,32 @@ description: 玩Android-Flutter版
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # 网络
-  dio: ^2.1.5
-  # 轮播图
+  # 官方插件
+  # https://github.com/flutter/plugins
+
+  # 网络 https://github.com/flutterchina/dio
+  dio: ^3.0.9
+  # 轮播图 https://github.com/best-flutter/flutter_swiper
   flutter_swiper : ^1.1.6
   # 序列化
-  json_annotation: ^2.4.0
-  # 下拉刷新上拉加载
-  pull_to_refresh: ^1.3.9
-  # webview
-  webview_flutter: ^0.3.7+1
+  json_annotation: ^3.0.1
+  # 下拉刷新上拉加载 https://github.com/peng8350/flutter_pulltorefresh
+  pull_to_refresh: ^1.6.1
+  # webview https://github.com/flutter/plugins/tree/master/packages/webview_flutter
+  webview_flutter: ^0.3.22+1
+  # flukit https://github.com/flutterchina/flukit
+  # flukit: ^1.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^0.1.3
 
 dev_dependencies:
   flutter_test:

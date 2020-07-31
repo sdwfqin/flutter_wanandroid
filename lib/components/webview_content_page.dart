@@ -44,7 +44,7 @@ class _WebViewContentPageState extends State<WebViewContentPage> {
                 loading = false;
               });
             },
-            javascriptMode: JavascriptMode.disabled,
+            javascriptMode: JavascriptMode.unrestricted,
           )),
     );
   }
