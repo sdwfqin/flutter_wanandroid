@@ -17,32 +17,32 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexState extends State<IndexPage> {
-
   int _currentIndex = 0;
-  List<BottomNavigationBarItem> _navigationViews;
+  late List<BottomNavigationBarItem> _navigationViews;
   var _itemTitle = ['首页', '体系', '项目', '我的'];
   var _body;
 
   @override
   void initState() {
     super.initState();
+
     /// icon https://material.io/tools/icons
     _navigationViews = <BottomNavigationBarItem>[
       new BottomNavigationBarItem(
         icon: Icon(Icons.home),
-        title: new Text(_itemTitle[0]),
+        label: _itemTitle[0],
       ),
       new BottomNavigationBarItem(
         icon: Icon(Icons.dashboard),
-        title: new Text(_itemTitle[1]),
+        label: _itemTitle[1],
       ),
       new BottomNavigationBarItem(
         icon: Icon(Icons.widgets),
-        title: new Text(_itemTitle[2]),
+        label: _itemTitle[2],
       ),
       new BottomNavigationBarItem(
         icon: Icon(Icons.person),
-        title: new Text(_itemTitle[3]),
+        label: _itemTitle[3],
       ),
     ];
   }
@@ -53,13 +53,17 @@ class _IndexState extends State<IndexPage> {
     /// https://www.colabug.com/4066700.html
     _body = new IndexedStack(
       index: _currentIndex,
-      children: <Widget>[new HomePage(), new TreePage(), new ProjectPage(), new MePage()],
+      children: <Widget>[
+        new HomePage(),
+        new TreePage(),
+        new ProjectPage(),
+        new MePage()
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
     initData();
 
     return new Scaffold(

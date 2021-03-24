@@ -5,16 +5,16 @@ import 'package:dio/dio.dart';
 /// @author 张钦
 /// @date 2018/12/6
 class HttpUtil {
-  static HttpUtil instance;
+  static HttpUtil? instance;
 
-  Dio dio;
-  BaseOptions options;
+  late Dio dio;
+  late BaseOptions options;
 
   static HttpUtil getInstance() {
     if (instance == null) {
       instance = new HttpUtil();
     }
-    return instance;
+    return instance!;
   }
 
   HttpUtil() {
@@ -37,7 +37,7 @@ class HttpUtil {
   }
 
   get(url, {data, options, cancelToken}) async {
-    Response response;
+    late Response response;
     try {
       response = await dio.get(
         url,
@@ -54,7 +54,7 @@ class HttpUtil {
   }
 
   post(url, {data, options, cancelToken}) async {
-    Response response;
+    late Response response;
     try {
       response = await dio.post(
         url,

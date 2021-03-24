@@ -8,7 +8,7 @@ class ProgressDialog extends StatelessWidget {
   final bool loading;
 
   //进度提醒内容
-  final String msg;
+  final String? msg;
 
   //加载中动画
   final Widget progress;
@@ -20,16 +20,14 @@ class ProgressDialog extends StatelessWidget {
   final Color textColor;
 
   ProgressDialog(
-      {Key key,
-      @required this.loading,
+      {Key? key,
+      required this.loading,
       this.msg,
       this.progress = const CircularProgressIndicator(),
       this.alpha = 0.6,
       this.textColor = Colors.white,
-      @required this.child})
-      : assert(child != null),
-        assert(loading != null),
-        super(key: key);
+      required this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +55,7 @@ class ProgressDialog extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
                   child: Text(
-                    msg,
+                    msg!,
                     style: TextStyle(color: textColor, fontSize: 16.0),
                   ),
                 )

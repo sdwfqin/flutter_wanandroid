@@ -37,7 +37,7 @@ class BodyView extends StatefulWidget {
 }
 
 class _BodyViewState extends State<BodyView> {
-  RefreshController _refreshController;
+  late RefreshController _refreshController;
 
   List<HomeListItemBean> data = [];
   int currentPager = 0;

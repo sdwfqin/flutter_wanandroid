@@ -16,7 +16,7 @@ class _SplashState extends State<SplashPage> {
     return new Scaffold(
       body: Container(
         child: Image.asset(
-          "images/splash.jpg",
+          "images/splash.png",
           width: window.physicalSize.width,
           height: window.physicalSize.height,
           fit: BoxFit.fitHeight,

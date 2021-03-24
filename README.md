@@ -2,7 +2,29 @@
 
 玩Android-Flutter版
 
-## Getting Started
+# 注意⚠️
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+### 对象序列化生成Dart代码
+
+```
+flutter packages pub run build_runner build
+```
+
+### 空安全
+> Cannot run with sound null safety because dependencies don't support null safety
+
+https://stackoverflow.com/questions/64917744/cannot-run-with-sound-null-safety-because-dependencies-dont-support-null-safety
+
+1. Debug运行
+
+```
+Run --> Edit Configurations --> Add Additional Run args --> --no-sound-null-safety
+or
+flutter run --no-sound-null-safety
+```
+
+2. 打包
+
+```
+flutter build apk --no-sound-null-safety
+```

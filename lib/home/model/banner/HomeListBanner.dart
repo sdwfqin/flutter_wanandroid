@@ -1,20 +1,22 @@
 import 'package:flutter_wanandroid/home/model/banner/HomeBanner.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-/// flutter packages pub run build_runner build
-
 part 'HomeListBanner.g.dart';
 
 @JsonSerializable()
 class HomeListBanner {
-  List<HomeBanner> data;
-  int errorCode;
-  String errorMsg;
+  late List<HomeBanner> data;
+  late int errorCode;
+  late String errorMsg;
 
   HomeListBanner(this.data, this.errorCode, this.errorMsg);
 
-  factory HomeListBanner.fromJson(Map<String, dynamic> json) =>
-      _$HomeListBannerFromJson(json);
+  @override
+  String toString() {
+    return 'HomeListBanner{data: $data, errorCode: $errorCode, errorMsg: $errorMsg}';
+  }
 
-  Map<String, dynamic> toJson() => _$HomeListBannerToJson(this);
+  factory HomeListBanner.fromJson(Map<String, dynamic> json) => _$HomeListBannerFromJson(json);
+
+  Map<String,dynamic> toJson() => _$HomeListBannerToJson(this);
 }
