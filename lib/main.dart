@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/index/index_page.dart';
-import 'package:flutter_wanandroid/index/splash_page.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_wanandroid/pages/index/index_page.dart';
+import 'package:flutter_wanandroid/pages/index/splash_page.dart';
+import 'package:flutter_wanandroid/pages/login/login_page.dart';
 
-void main() => runApp(new WanAndroid());
+void main() {
+  //顶部状态栏透明
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent)
+  );
+  runApp(WanAndroid());
+}
 
 /// Created with Android Studio.
 /// User: 张钦
@@ -17,6 +25,7 @@ class WanAndroid extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashPage(),
+        '/login': (context) => LoginPage(),
         '/index': (context) => IndexPage(),
       },
       title: '玩Android-Flutter版',

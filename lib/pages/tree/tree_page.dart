@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-class MePage extends StatelessWidget {
+class TreePage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: new Text(
-          "个人中心",
+          "体系",
         ),
       ),
       body: Container(
-        child: new Text("个人中心"),
+        child: new Text("体系"),
       ),
     );
   }

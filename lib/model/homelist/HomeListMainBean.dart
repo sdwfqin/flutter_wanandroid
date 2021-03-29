@@ -1,4 +1,4 @@
-import 'package:flutter_wanandroid/home/model/homelist/HomeListDataBean.dart';
+import 'package:flutter_wanandroid/model/homelist/HomeListDataBean.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'HomeListMainBean.g.dart';

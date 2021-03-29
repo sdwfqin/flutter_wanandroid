@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/components/progress_dialog.dart';
 import 'package:flutter_wanandroid/components/webview_content_page.dart';
-import 'package:flutter_wanandroid/home/model/banner/HomeBanner.dart';
-import 'package:flutter_wanandroid/home/model/banner/HomeListBanner.dart';
-import 'package:flutter_wanandroid/home/model/homelist/HomeListItemBean.dart';
-import 'package:flutter_wanandroid/home/model/homelist/HomeListMainBean.dart';
-import 'package:flutter_wanandroid/utils/HttpConstants.dart';
-import 'package:flutter_wanandroid/utils/HttpUtil.dart';
+import 'package:flutter_wanandroid/http/HttpConstants.dart';
+import 'package:flutter_wanandroid/http/HttpUtil.dart';
+import 'package:flutter_wanandroid/model/banner/HomeBanner.dart';
+import 'package:flutter_wanandroid/model/banner/HomeListBanner.dart';
+import 'package:flutter_wanandroid/model/homelist/HomeListItemBean.dart';
+import 'package:flutter_wanandroid/model/homelist/HomeListMainBean.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// Created with Android Studio.
@@ -17,26 +17,12 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 /// Date: 2018-11-01
 /// email: sdwfqin@gmail.com
 /// target: 主页
-class HomePage extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(
-            "首页",
-          ),
-        ),
-        body: new BodyView());
-  }
-}
-
-class BodyView extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
   _BodyViewState createState() => new _BodyViewState();
 }
 
-class _BodyViewState extends State<BodyView> {
+class _BodyViewState extends State<HomePage> {
   late RefreshController _refreshController;
 
   List<HomeListItemBean> data = [];
@@ -52,31 +38,40 @@ class _BodyViewState extends State<BodyView> {
 
   @override
   Widget build(BuildContext context) {
-    return ProgressDialog(
-      // 第一次进入有动画
-      loading: loading,
-      msg: "正在加载中",
-      alpha: 0,
-      child: SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: CustomScrollView(
-          // 默认居中对齐
-          slivers: <Widget>[
-            // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
-            SliverToBoxAdapter(
-              child: new HeadView(),
-            ),
-            // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
-            SliverList(
-                delegate: SliverChildBuilderDelegate(
-              _buildListItem,
-              childCount: data.length,
-            ))
-          ],
+    return Scaffold(
+      appBar: new AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: new Text(
+          "首页",
+        ),
+      ),
+      body: ProgressDialog(
+        // 第一次进入有动画
+        loading: loading,
+        msg: "正在加载中",
+        alpha: 0,
+        child: SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: true,
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+          child: CustomScrollView(
+            // 默认居中对齐
+            slivers: <Widget>[
+              // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
+              SliverToBoxAdapter(
+                child: new HeadView(),
+              ),
+              // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
+              SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                _buildListItem,
+                childCount: data.length,
+              ))
+            ],
+          ),
         ),
       ),
     );
@@ -208,29 +203,36 @@ class _BodyViewState extends State<BodyView> {
   }
 
   /// 加载数据
-  void _getData() async {
-    var response = await HttpUtil().get("article/list/$currentPager/json");
-    var homeListMainBean = new HomeListMainBean.fromJson(response);
+  void _getData() {
+    HttpUtil.instance.dio.get("article/list/$currentPager/json").then((value) {
+      HomeListMainBean bean = HomeListMainBean.fromJson(value.data);
+      // setState 相当于 runOnUiThread
+      // _refreshController 是分页组件用的
+      setState(() {
+        if (currentPager == 0) {
+          data = bean.data.datas;
+          _refreshController.refreshCompleted();
+          loading = false;
+        } else {
+          data.addAll(bean.data.datas);
+          _refreshController.loadComplete();
+        }
+        currentPager = currentPager + 1;
+      });
 
-    // setState 相当于 runOnUiThread
-    // _refreshController 是分页组件用的
-    setState(() {
-      if (currentPager == 0) {
-        data = homeListMainBean.data.datas;
-        _refreshController.refreshCompleted();
-        loading = false;
-      } else {
-        data.addAll(homeListMainBean.data.datas);
-        _refreshController.loadComplete();
+      if (bean.data.over) {
+        _refreshController.loadNoData();
       }
-      currentPager = currentPager + 1;
+    }).whenComplete(() {
+      setState(() {
+        loading = false;
+        _refreshController.loadComplete();
+        _refreshController.refreshCompleted();
+      });
     });
-
-    if (homeListMainBean.data.over) {
-      _refreshController.loadNoData();
-    }
   }
 
+  @override
   void dispose() {
     _refreshController.dispose();
     super.dispose();
@@ -253,13 +255,14 @@ class _HeadViewState extends State<HeadView> {
     super.initState();
   }
 
-  void _getData() async {
-    var response = await HttpUtil().get(HttpConstants.banner);
-
-    // setState 相当于 runOnUiThread
-    setState(() {
-      data = new HomeListBanner.fromJson(response).data;
-      count = data.length < 1 ? 1 : data.length;
+  void _getData() {
+    HttpUtil.instance.dio.get(HttpConstants.banner).then((value) {
+      HomeListBanner bean = HomeListBanner.fromJson(value.data);
+      // setState 相当于 runOnUiThread
+      setState(() {
+        data = bean.data;
+        count = data.length < 1 ? 1 : data.length;
+      });
     });
   }
 

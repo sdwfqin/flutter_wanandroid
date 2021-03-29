@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/home/home_page.dart';
-import 'package:flutter_wanandroid/me/me_page.dart';
-import 'package:flutter_wanandroid/project/project_page.dart';
-import 'package:flutter_wanandroid/tree/tree_page.dart';
+import 'package:flutter_wanandroid/pages/home/home_page.dart';
+import 'package:flutter_wanandroid/pages/me/me_page.dart';
+import 'package:flutter_wanandroid/pages/project/project_page.dart';
+import 'package:flutter_wanandroid/pages/tree/tree_page.dart';
 
 /// Created with Android Studio.
 /// User: 张钦
@@ -11,9 +11,7 @@ import 'package:flutter_wanandroid/tree/tree_page.dart';
 /// target:
 class IndexPage extends StatefulWidget {
   @override
-  State createState() {
-    return _IndexState();
-  }
+  State createState() => _IndexState();
 }
 
 class _IndexState extends State<IndexPage> {
@@ -28,19 +26,19 @@ class _IndexState extends State<IndexPage> {
 
     /// icon https://material.io/tools/icons
     _navigationViews = <BottomNavigationBarItem>[
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: Icon(Icons.home),
         label: _itemTitle[0],
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: Icon(Icons.dashboard),
         label: _itemTitle[1],
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: Icon(Icons.widgets),
         label: _itemTitle[2],
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: Icon(Icons.person),
         label: _itemTitle[3],
       ),
@@ -51,24 +49,22 @@ class _IndexState extends State<IndexPage> {
   initData() {
     /// IndexedStack继承自Stack，它的作用是显示第index个child，其他child都是不可见的。
     /// https://www.colabug.com/4066700.html
-    _body = new IndexedStack(
-      index: _currentIndex,
-      children: <Widget>[
-        new HomePage(),
-        new TreePage(),
-        new ProjectPage(),
-        new MePage()
-      ],
-    );
+    _body = Container(
+        child: IndexedStack(index: _currentIndex, children: <Widget>[
+      HomePage(),
+      TreePage(),
+      ProjectPage(),
+      MePage()
+    ]));
   }
 
   @override
   Widget build(BuildContext context) {
     initData();
 
-    return new Scaffold(
+    return Scaffold(
       body: _body,
-      bottomNavigationBar: new BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         items: _navigationViews
             .map((BottomNavigationBarItem navigationView) => navigationView)
             .toList(),

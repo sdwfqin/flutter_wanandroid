@@ -15,11 +15,13 @@ class _SplashState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: Container(
-        child: Image.asset(
-          "images/splash.png",
-          width: window.physicalSize.width,
-          height: window.physicalSize.height,
-          fit: BoxFit.fitHeight,
+        child: Center(
+          child: Image.asset(
+            "images/splash.png",
+            width: window.physicalSize.width,
+            height: window.physicalSize.height,
+            fit: BoxFit.fitHeight,
+          ),
         ),
       ),
     );
@@ -32,9 +34,9 @@ class _SplashState extends State<SplashPage> {
     countDown();
   }
 
-  /// 倒计时3秒
+  /// 倒计时1秒
   void countDown() {
-    var _duration = new Duration(seconds: 3);
+    var _duration = new Duration(seconds: 1);
     new Future.delayed(_duration, toIndexPage);
   }
 
