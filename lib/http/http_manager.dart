@@ -9,13 +9,13 @@ import 'package:path_provider/path_provider.dart';
 ///
 /// @author 张钦
 /// @date 2018/12/6
-class HttpUtil {
+class HttpManager {
   // 单例模式
-  static final HttpUtil instance = HttpUtil._internal();
+  static final HttpManager instance = HttpManager._internal();
 
-  factory HttpUtil() => instance;
+  factory HttpManager() => instance;
 
-  HttpUtil._internal() {
+  HttpManager._internal() {
     init();
   }
 

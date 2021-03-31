@@ -1,15 +1,16 @@
+import 'dart:core';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_wanandroid/components/progress_dialog.dart';
 import 'package:flutter_wanandroid/components/webview_content_page.dart';
-import 'package:flutter_wanandroid/http/HttpConstants.dart';
-import 'package:flutter_wanandroid/http/HttpUtil.dart';
-import 'package:flutter_wanandroid/model/banner/HomeBanner.dart';
-import 'package:flutter_wanandroid/model/banner/HomeListBanner.dart';
-import 'package:flutter_wanandroid/model/homelist/HomeListItemBean.dart';
-import 'package:flutter_wanandroid/model/homelist/HomeListMainBean.dart';
+import 'package:flutter_wanandroid/http/http_constants.dart';
+import 'package:flutter_wanandroid/http/http_manager.dart';
+import 'package:flutter_wanandroid/model/banner/home_banner.dart';
+import 'package:flutter_wanandroid/model/banner/home_list_banner.dart';
+import 'package:flutter_wanandroid/model/homelist/home_list_item_bean.dart';
+import 'package:flutter_wanandroid/model/homelist/home_list_main_bean.dart';
+import 'package:flutter_wanandroid/utils/loading_utils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// Created with Android Studio.
@@ -25,15 +26,19 @@ class HomePage extends StatefulWidget {
 class _BodyViewState extends State<HomePage> {
   late RefreshController _refreshController;
 
+  LoadingUtils loadingUtils = LoadingUtils();
+
   List<HomeListItemBean> data = [];
   int currentPager = 0;
-  bool loading = true;
 
   @override
   void initState() {
+    super.initState();
     _refreshController = RefreshController();
     _getData();
-    super.initState();
+    Future.delayed(Duration.zero, () {
+      loadingUtils.showLoading(context);
+    });
   }
 
   @override
@@ -46,32 +51,26 @@ class _BodyViewState extends State<HomePage> {
           "首页",
         ),
       ),
-      body: ProgressDialog(
-        // 第一次进入有动画
-        loading: loading,
-        msg: "正在加载中",
-        alpha: 0,
-        child: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: true,
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          onLoading: _onLoading,
-          child: CustomScrollView(
-            // 默认居中对齐
-            slivers: <Widget>[
-              // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
-              SliverToBoxAdapter(
-                child: new HeadView(),
-              ),
-              // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
-              SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                _buildListItem,
-                childCount: data.length,
-              ))
-            ],
-          ),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: CustomScrollView(
+          // 默认居中对齐
+          slivers: <Widget>[
+            // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
+            SliverToBoxAdapter(
+              child: new HeadView(),
+            ),
+            // 当列表项高度固定时，使用 SliverFixedExtendList 比 SliverList 具有更高的性能
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+              _buildListItem,
+              childCount: data.length,
+            ))
+          ],
         ),
       ),
     );
@@ -204,7 +203,9 @@ class _BodyViewState extends State<HomePage> {
 
   /// 加载数据
   void _getData() {
-    HttpUtil.instance.dio.get("article/list/$currentPager/json").then((value) {
+    HttpManager.instance.dio
+        .get("article/list/$currentPager/json")
+        .then((value) {
       HomeListMainBean bean = HomeListMainBean.fromJson(value.data);
       // setState 相当于 runOnUiThread
       // _refreshController 是分页组件用的
@@ -212,7 +213,6 @@ class _BodyViewState extends State<HomePage> {
         if (currentPager == 0) {
           data = bean.data.datas;
           _refreshController.refreshCompleted();
-          loading = false;
         } else {
           data.addAll(bean.data.datas);
           _refreshController.loadComplete();
@@ -225,10 +225,10 @@ class _BodyViewState extends State<HomePage> {
       }
     }).whenComplete(() {
       setState(() {
-        loading = false;
         _refreshController.loadComplete();
         _refreshController.refreshCompleted();
       });
+      loadingUtils.hideLoading();
     });
   }
 
@@ -256,7 +256,7 @@ class _HeadViewState extends State<HeadView> {
   }
 
   void _getData() {
-    HttpUtil.instance.dio.get(HttpConstants.banner).then((value) {
+    HttpManager.instance.dio.get(HttpConstants.banner).then((value) {
       HomeListBanner bean = HomeListBanner.fromJson(value.data);
       // setState 相当于 runOnUiThread
       setState(() {

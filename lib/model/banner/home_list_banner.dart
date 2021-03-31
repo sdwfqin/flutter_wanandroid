@@ -1,7 +1,7 @@
-import 'package:flutter_wanandroid/model/banner/HomeBanner.dart';
+import 'package:flutter_wanandroid/model/banner/home_banner.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'HomeListBanner.g.dart';
+part 'home_list_banner.g.dart';
 
 @JsonSerializable()
 class HomeListBanner {

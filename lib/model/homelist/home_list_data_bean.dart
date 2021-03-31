@@ -1,7 +1,7 @@
-import 'package:flutter_wanandroid/model/homelist/HomeListItemBean.dart';
+import 'package:flutter_wanandroid/model/homelist/home_list_item_bean.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'HomeListDataBean.g.dart';
+part 'home_list_data_bean.g.dart';
 
 ///这个标注是告诉生成器，这个类是需要生成Model类的
 @JsonSerializable()

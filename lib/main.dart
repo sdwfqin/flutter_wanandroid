@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_wanandroid/http/http_manager.dart';
 import 'package:flutter_wanandroid/pages/index/index_page.dart';
 import 'package:flutter_wanandroid/pages/index/splash_page.dart';
 import 'package:flutter_wanandroid/pages/login/login_page.dart';
@@ -21,6 +22,7 @@ class WanAndroid extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    HttpManager();
     return new MaterialApp(
       initialRoute: '/',
       routes: {

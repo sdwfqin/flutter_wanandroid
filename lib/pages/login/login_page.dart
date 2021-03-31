@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/http/HttpConstants.dart';
-import 'package:flutter_wanandroid/http/HttpUtil.dart';
+import 'package:flutter_wanandroid/http/http_constants.dart';
+import 'package:flutter_wanandroid/http/http_manager.dart';
+import 'package:flutter_wanandroid/utils/toast_utils.dart';
 
 /// Created with Android Studio.
 /// User: 张钦
@@ -111,9 +112,11 @@ class _LoginState extends State<LoginPage> {
       'username': username,
       'password': password,
     });
-    HttpUtil.instance.dio.post(HttpConstants.login, data: formData)
+    HttpManager.instance.dio
+        .post(HttpConstants.login, data: formData)
         .then((value) {
-          print(value);
+      showToast("登录成功");
+      print(value);
     });
   }
 }

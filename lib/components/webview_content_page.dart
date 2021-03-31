@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/components/progress_dialog.dart';
+import 'package:flutter_wanandroid/utils/loading_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 /// Created with Android Studio.
@@ -14,15 +16,27 @@ class WebViewContentPage extends StatefulWidget {
   WebViewContentPage(this.title, this.url);
 
   @override
-  _WebViewContentPageState createState() => new _WebViewContentPageState(title, url);
+  _WebViewContentPageState createState() =>
+      new _WebViewContentPageState(title, url);
 }
 
 class _WebViewContentPageState extends State<WebViewContentPage> {
   final String title;
   final String url;
-  bool loading = true;
+
+  LoadingUtils loadingUtils = LoadingUtils();
 
   _WebViewContentPageState(this.title, this.url);
+
+  @override
+  void initState() {
+    super.initState();
+    // Enable hybrid composition.
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    Future.delayed(Duration.zero, () {
+      loadingUtils.showLoading(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +46,13 @@ class _WebViewContentPageState extends State<WebViewContentPage> {
           title,
         ),
       ),
-      body: ProgressDialog(
-          // 第一次进入有动画
-          loading: loading,
-          msg: "正在加载中",
-          alpha: 0,
-          child: WebView(
-            initialUrl: url,
-            onPageFinished: (url) {
-              setState(() {
-                loading = false;
-              });
-            },
-            javascriptMode: JavascriptMode.unrestricted,
-          )),
+      body: WebView(
+        initialUrl: url,
+        onPageFinished: (url) {
+          loadingUtils.hideLoading();
+        },
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
     );
   }
 }

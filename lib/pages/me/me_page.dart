@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid/http/HttpConstants.dart';
-import 'package:flutter_wanandroid/http/HttpUtil.dart';
+import 'package:flutter_wanandroid/http/http_constants.dart';
+import 'package:flutter_wanandroid/http/http_manager.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -45,11 +45,15 @@ class _BodyViewState extends State<MePage> with WidgetsBindingObserver {
           style: ButtonStyle(
               padding: MaterialStateProperty.all(EdgeInsets.all(15.0)),
               backgroundColor:
-                  MaterialStateProperty.all(Theme.of(context).primaryColor),
+              MaterialStateProperty.all(Theme
+                  .of(context)
+                  .primaryColor),
               foregroundColor: MaterialStateProperty.all(Colors.white)),
           child: Text("登录"),
           onPressed: () {
-            Navigator.of(context).pushNamed('/login');
+            Navigator.of(context).pushNamed('/login').then((value) {
+              _userInfo();
+            });
           },
         ),
       ),
@@ -57,7 +61,7 @@ class _BodyViewState extends State<MePage> with WidgetsBindingObserver {
   }
 
   void _userInfo() {
-    HttpUtil.instance.dio
+    HttpManager.instance.dio
         .get(HttpConstants.userinfo)
         .then((value) => {print(value)});
   }

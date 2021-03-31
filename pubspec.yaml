@@ -36,6 +36,8 @@ dependencies:
   shared_preferences: ^2.0.5
   # path_provider https://pub.dev/packages/path_provider
   path_provider: ^2.0.1
+  # path_provider https://pub.flutter-io.cn/packages/fluttertoast
+  fluttertoast: ^8.0.3
 
 
   # The following adds the Cupertino Icons font to your application.

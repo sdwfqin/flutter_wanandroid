@@ -36,7 +36,7 @@ class _SplashState extends State<SplashPage> {
 
   /// 倒计时1秒
   void countDown() {
-    var _duration = new Duration(seconds: 1);
+    var _duration = new Duration(seconds: 2);
     new Future.delayed(_duration, toIndexPage);
   }
 

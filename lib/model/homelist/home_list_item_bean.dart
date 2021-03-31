@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'HomeListItemBean.g.dart';
+part 'home_list_item_bean.g.dart';
 
 ///这个标注是告诉生成器，这个类是需要生成Model类的
 @JsonSerializable()

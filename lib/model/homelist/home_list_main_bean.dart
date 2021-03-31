@@ -1,7 +1,7 @@
-import 'package:flutter_wanandroid/model/homelist/HomeListDataBean.dart';
+import 'package:flutter_wanandroid/model/homelist/home_list_data_bean.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'HomeListMainBean.g.dart';
+part 'home_list_main_bean.g.dart';
 
 @JsonSerializable()
 class HomeListMainBean {
