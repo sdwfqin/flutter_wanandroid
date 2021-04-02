@@ -4,12 +4,12 @@ import 'package:flutter_wanandroid/http/http_manager.dart';
 import 'package:flutter_wanandroid/pages/index/index_page.dart';
 import 'package:flutter_wanandroid/pages/index/splash_page.dart';
 import 'package:flutter_wanandroid/pages/login/login_page.dart';
+import 'package:flutter_wanandroid/utils/sp_utils.dart';
 
 void main() {
   //顶部状态栏透明
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent)
-  );
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(WanAndroid());
 }
 
@@ -22,9 +22,13 @@ class WanAndroid extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SpUtils();
     HttpManager();
     return new MaterialApp(
       initialRoute: '/',
+      theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xFFF5F5F9)
+      ),
       routes: {
         '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),

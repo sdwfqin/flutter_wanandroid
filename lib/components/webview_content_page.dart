@@ -24,7 +24,7 @@ class _WebViewContentPageState extends State<WebViewContentPage> {
   final String title;
   final String url;
 
-  LoadingUtils loadingUtils = LoadingUtils();
+  LoadingUtils _loadingUtils = LoadingUtils();
 
   _WebViewContentPageState(this.title, this.url);
 
@@ -34,7 +34,7 @@ class _WebViewContentPageState extends State<WebViewContentPage> {
     // Enable hybrid composition.
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     Future.delayed(Duration.zero, () {
-      loadingUtils.showLoading(context);
+      _loadingUtils.showLoading(context);
     });
   }
 
@@ -49,7 +49,7 @@ class _WebViewContentPageState extends State<WebViewContentPage> {
       body: WebView(
         initialUrl: url,
         onPageFinished: (url) {
-          loadingUtils.hideLoading();
+          _loadingUtils.hideLoading();
         },
         javascriptMode: JavascriptMode.unrestricted,
       ),

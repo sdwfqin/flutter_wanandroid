@@ -26,10 +26,10 @@ class HomePage extends StatefulWidget {
 class _BodyViewState extends State<HomePage> {
   late RefreshController _refreshController;
 
-  LoadingUtils loadingUtils = LoadingUtils();
+  LoadingUtils _loadingUtils = LoadingUtils();
 
-  List<HomeListItemBean> data = [];
-  int currentPager = 0;
+  List<HomeListItemBean> _data = [];
+  int _currentPager = 0;
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _BodyViewState extends State<HomePage> {
     _refreshController = RefreshController();
     _getData();
     Future.delayed(Duration.zero, () {
-      loadingUtils.showLoading(context);
+      _loadingUtils.showLoading(context);
     });
   }
 
@@ -68,7 +68,7 @@ class _BodyViewState extends State<HomePage> {
             SliverList(
                 delegate: SliverChildBuilderDelegate(
               _buildListItem,
-              childCount: data.length,
+              childCount: _data.length,
             ))
           ],
         ),
@@ -78,7 +78,7 @@ class _BodyViewState extends State<HomePage> {
 
   // 列表项
   Widget _buildListItem(BuildContext context, int index) {
-    var itemData = data[index];
+    var itemData = _data[index];
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -93,7 +93,8 @@ class _BodyViewState extends State<HomePage> {
         padding: EdgeInsets.all(10.0),
         margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(8.0)),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -115,10 +116,7 @@ class _BodyViewState extends State<HomePage> {
                       child: Text(itemData.author,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14.0,
-                          )),
+                          style: Theme.of(context).textTheme.bodyText2),
                     ),
                   ),
                   // 分类
@@ -134,24 +132,20 @@ class _BodyViewState extends State<HomePage> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 14.0,
-                          )),
+                              fontSize:
+                                  Theme.of(context).textTheme.caption!.fontSize,
+                              color: Theme.of(context).accentColor)),
                     ),
                   ),
                 ],
               ),
               // 标题
               Container(
-                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: Text(itemData.title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    )),
-              ),
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: Text(itemData.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.subtitle1)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -177,10 +171,7 @@ class _BodyViewState extends State<HomePage> {
                           textAlign: TextAlign.end,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14.0,
-                          )),
+                          style: Theme.of(context).textTheme.caption),
                     ),
                   ),
                 ],
@@ -192,7 +183,7 @@ class _BodyViewState extends State<HomePage> {
 
   void _onRefresh() {
     setState(() {
-      currentPager = 0;
+      _currentPager = 0;
     });
     _getData();
   }
@@ -204,20 +195,20 @@ class _BodyViewState extends State<HomePage> {
   /// 加载数据
   void _getData() {
     HttpManager.instance.dio
-        .get("article/list/$currentPager/json")
+        .get("article/list/$_currentPager/json")
         .then((value) {
       HomeListMainBean bean = HomeListMainBean.fromJson(value.data);
       // setState 相当于 runOnUiThread
       // _refreshController 是分页组件用的
       setState(() {
-        if (currentPager == 0) {
-          data = bean.data.datas;
+        if (_currentPager == 0) {
+          _data = bean.data.datas;
           _refreshController.refreshCompleted();
         } else {
-          data.addAll(bean.data.datas);
+          _data.addAll(bean.data.datas);
           _refreshController.loadComplete();
         }
-        currentPager = currentPager + 1;
+        _currentPager = _currentPager + 1;
       });
 
       if (bean.data.over) {
@@ -228,7 +219,7 @@ class _BodyViewState extends State<HomePage> {
         _refreshController.loadComplete();
         _refreshController.refreshCompleted();
       });
-      loadingUtils.hideLoading();
+      _loadingUtils.hideLoading();
     });
   }
 

@@ -2,8 +2,11 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/constants/sp_constants.dart';
 import 'package:flutter_wanandroid/http/http_constants.dart';
 import 'package:flutter_wanandroid/http/http_manager.dart';
+import 'package:flutter_wanandroid/utils/loading_utils.dart';
+import 'package:flutter_wanandroid/utils/sp_utils.dart';
 import 'package:flutter_wanandroid/utils/toast_utils.dart';
 
 /// Created with Android Studio.
@@ -20,6 +23,8 @@ class _LoginState extends State<LoginPage> {
   TextEditingController _unameController = new TextEditingController();
   TextEditingController _pwdController = new TextEditingController();
   GlobalKey _formKey = new GlobalKey<FormState>();
+
+  LoadingUtils _loadingUtils = LoadingUtils();
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +113,7 @@ class _LoginState extends State<LoginPage> {
 
   /// 登录
   void _login(String username, String password) {
+    _loadingUtils.showLoading(context);
     var formData = FormData.fromMap({
       'username': username,
       'password': password,
@@ -116,7 +122,8 @@ class _LoginState extends State<LoginPage> {
         .post(HttpConstants.login, data: formData)
         .then((value) {
       showToast("登录成功");
-      print(value);
-    });
+      Navigator.pop(context);
+      SpUtils.instance.setStorage(SpConstants.userData, value.data["data"]);
+    }).whenComplete(() => _loadingUtils.hideLoading());
   }
 }
