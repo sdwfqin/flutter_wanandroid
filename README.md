@@ -33,7 +33,6 @@ flutter build apk --no-sound-null-safety
 
 # 截图
 
-|   |   |   |
-|  ----  | ----  | ----  |
 | ![](./screenshot/home_light.jpg)  | ![](./screenshot/me_light.jpg) | ![](./screenshot/login_light.jpg) |
+|  ----  | ----  | ----  |
 | ![](./screenshot/home_dark.jpg)  | ![](./screenshot/me_dark.jpg) | ![](./screenshot/login_dark.jpg) |
