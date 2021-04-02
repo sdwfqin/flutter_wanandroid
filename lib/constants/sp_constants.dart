@@ -5,4 +5,5 @@
 /// target: sp文件
 class SpConstants {
   static final userData = "userData";
+  static final skin = "skin";
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_wanandroid/common/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Created with Android Studio.
@@ -19,12 +20,7 @@ class SpUtils {
 
   /// 命名构造函数 用于初始化SharedPreferences实例对象
   SpUtils._init() {
-    _initStorage();
-  }
-
-  // 之所以这个没有写在 _init中，是因为SharedPreferences.getInstance是一个异步的方法 需要用await接收它的值
-  _initStorage() async {
-    _storage = await SharedPreferences.getInstance();
+    _storage = Global.prefs;
   }
 
   /// 设置存储

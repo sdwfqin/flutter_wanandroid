@@ -79,104 +79,111 @@ class _BodyViewState extends State<HomePage> {
   // 列表项
   Widget _buildListItem(BuildContext context, int index) {
     var itemData = _data[index];
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          new MaterialPageRoute(
-            builder: (context) =>
-                new WebViewContentPage(itemData.title, itemData.link),
-          ),
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
+    return Container(
+      margin: EdgeInsets.fromLTRB(10, index == 0 ? 10 : 0, 10, 10),
+      child: Ink(
         decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(8.0)),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  // 作者前边的小icon
-                  Image(
-                      image: AssetImage("images/me.png"),
-                      width: 12.0,
-                      height: 12.0,
-                      alignment: Alignment.center),
-                  // 作者
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
-                      child: Text(itemData.author,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText2),
-                    ),
-                  ),
-                  // 分类
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                          itemData.superChapterName +
-                              "/" +
-                              itemData.chapterName,
-                          textAlign: TextAlign.end,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize:
-                                  Theme.of(context).textTheme.caption!.fontSize,
-                              color: Theme.of(context).accentColor)),
-                    ),
-                  ),
-                ],
+        child: InkWell(
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          onTap: () {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) =>
+                    new WebViewContentPage(itemData.title, itemData.link),
               ),
-              // 标题
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                  child: Text(itemData.title,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.subtitle1)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // 收藏
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Image(
-                        image: AssetImage("images/collect_no.png"),
-                        width: 20.0,
-                        height: 20.0,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      // 作者前边的小icon
+                      Image(
+                          image: AssetImage("images/me.png"),
+                          width: 12.0,
+                          height: 12.0,
+                          alignment: Alignment.center),
+                      // 作者
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                          child: Text(itemData.author,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.bodyText2),
+                        ),
                       ),
-                    ),
+                      // 分类
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                              itemData.superChapterName +
+                                  "/" +
+                                  itemData.chapterName,
+                              textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .fontSize,
+                                  color: Theme.of(context).accentColor)),
+                        ),
+                      ),
+                    ],
                   ),
-                  // 发布时间
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(itemData.niceDate,
-                          textAlign: TextAlign.end,
+                  // 标题
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      child: Text(itemData.title,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.caption),
-                    ),
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.subtitle1)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      // 收藏
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Image(
+                            image: AssetImage("images/collect_no.png"),
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                        ),
+                      ),
+                      // 发布时间
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Text(itemData.niceDate,
+                              textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.caption),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ]),
+                ]),
+          ),
+        ),
       ),
     );
   }

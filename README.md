@@ -2,6 +2,8 @@
 
 玩Android-Flutter版
 
+TODO: 开发中～
+
 # 注意⚠️
 
 ### 对象序列化生成Dart代码
@@ -28,3 +30,10 @@ flutter run --no-sound-null-safety
 ```
 flutter build apk --no-sound-null-safety
 ```
+
+# 截图
+
+|   |   |   |
+|  ----  | ----  | ----  |
+| ![](./screenshot/home_light.jpg)  | ![](./screenshot/me_light.jpg) | ![](./screenshot/login_light.jpg) |
+| ![](./screenshot/home_dark.jpg)  | ![](./screenshot/me_dark.jpg) | ![](./screenshot/login_dark.jpg) |

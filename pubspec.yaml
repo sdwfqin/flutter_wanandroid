@@ -38,13 +38,8 @@ dependencies:
   path_provider: ^2.0.1
   # toast https://pub.flutter-io.cn/packages/fluttertoast
   fluttertoast: ^8.0.3
-  # 全局状态管理
+  # 全局状态管理 https://github.com/rrousselGit/provider/blob/master/resources/translations/zh-CN/README.md
   provider: ^5.0.0
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +58,7 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  # Icons https://api.flutter-io.cn/flutter/material/Icons-class.html
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

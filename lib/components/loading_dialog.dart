@@ -15,7 +15,7 @@ class LoadingDialog extends Dialog {
   //字体颜色
   final Color textColor;
 
-  bool canceledOnTouchOutSide;
+  final bool canceledOnTouchOutSide;
 
   LoadingDialog(this.msg,
       {Key? key,

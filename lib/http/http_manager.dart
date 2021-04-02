@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_wanandroid/utils/toast_utils.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// 描述：网络请求工具类
@@ -44,27 +45,20 @@ class HttpManager {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       // Do something before request is sent
       return handler.next(options); //continue
-      // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`,如`dio.resolve(response)`。
-      // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
-      //
-      // 如果你想终止请求并触发一个错误,你可以返回一个`DioError`对象,如`dio.reject(error)`，
-      // 这样请求将被中止并触发异常，上层catchError会被调用。
     }, onResponse: (response, handler) {
       // Do something with response data
       if (response.data['errorCode'] != 0) {
-        return handler.reject(DioError(
-            requestOptions: response.requestOptions,
-            error: response.data['errorMsg']));
+        return handler.reject(
+            DioError(
+                requestOptions: response.requestOptions,
+                error: response.data['errorMsg']),
+            true);
       }
       return handler.next(response); // continue
-      // 如果你想终止请求并触发一个错误,你可以返回一个`DioError`对象,如`dio.reject(error)`，
-      // 这样请求将被中止并触发异常，上层catchError会被调用。
     }, onError: (DioError e, handler) {
       // Do something with response error
-      print(e);
+      showToast(e.message);
       return handler.next(e); //continue
-      // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`,如`dio.resolve(response)`。
-      // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
     }));
   }
 
@@ -73,7 +67,6 @@ class HttpManager {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String dir = appDocDir.path + "/.cookies/";
     print('cookie路径地址：' + dir);
-    // TODO cookie这里有延时，刚进来获取不到
     var cookieJar = PersistCookieJar(storage: FileStorage(dir));
     _dio.interceptors.add(CookieManager(cookieJar));
   }
