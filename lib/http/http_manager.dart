@@ -11,6 +11,9 @@ import 'package:path_provider/path_provider.dart';
 /// @author 张钦
 /// @date 2018/12/6
 class HttpManager {
+
+  static final String ignoreException = "ignoreException";
+
   // 单例模式
   static final HttpManager instance = HttpManager._internal();
 
@@ -46,7 +49,11 @@ class HttpManager {
       // Do something before request is sent
       return handler.next(options); //continue
     }, onResponse: (response, handler) {
-      // Do something with response data
+      // 忽略全局异常处理，仍然可以单独处理异常
+      var extraIgnoreException = response.requestOptions.extra[ignoreException];
+      if(extraIgnoreException != null && extraIgnoreException){
+        return handler.next(response); // continue
+      }
       if (response.data['errorCode'] != 0) {
         return handler.reject(
             DioError(

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/constants/sp_constants.dart';
 import 'package:flutter_wanandroid/http/http_constants.dart';
@@ -177,7 +178,10 @@ class _BodyViewState extends State<MePage> with WidgetsBindingObserver {
   }
 
   void _initData() {
-    HttpManager.instance.dio.get(HttpConstants.userinfo).then((value) {
+    HttpManager.instance.dio
+        .get(HttpConstants.userinfo,
+            options: Options(extra: {HttpManager.ignoreException: true}))
+        .then((value) {
       setState(() {
         _userData.addAll(value.data["data"]);
       });
