@@ -49,6 +49,7 @@ class _IndexState extends State<IndexPage> {
   initData() {
     /// IndexedStack继承自Stack，它的作用是显示第index个child，其他child都是不可见的。
     /// https://www.colabug.com/4066700.html
+    /// 也可以使用PageView
     _body = Container(
         child: IndexedStack(index: _currentIndex, children: <Widget>[
       HomePage(),

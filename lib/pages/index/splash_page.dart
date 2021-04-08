@@ -2,6 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+/// Created with Android Studio.
+/// User: 张钦
+/// Date: 2018-11-01
+/// email: sdwfqin@gmail.com
+/// target: 闪屏页
 class SplashPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -10,7 +15,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashState extends State<SplashPage> {
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

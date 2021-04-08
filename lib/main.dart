@@ -9,6 +9,11 @@ import 'package:provider/provider.dart';
 
 import 'common/global.dart';
 
+/// Created with Android Studio.
+/// User: 张钦
+/// Date: 2018-11-01
+/// email: sdwfqin@gmail.com
+/// target:
 void main() {
   //顶部状态栏透明
   SystemChrome.setSystemUIOverlayStyle(
@@ -22,11 +27,6 @@ void main() {
       ));
 }
 
-/// Created with Android Studio.
-/// User: 张钦
-/// Date: 2018-11-01
-/// email: sdwfqin@gmail.com
-/// target:
 class WanAndroid extends StatelessWidget {
   // This widget is the root of your application.
   @override

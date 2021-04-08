@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/constants/sp_constants.dart';
-import 'package:flutter_wanandroid/http/http_constants.dart';
-import 'package:flutter_wanandroid/http/http_manager.dart';
+import 'package:flutter_wanandroid/http/api/user.dart';
 import 'package:flutter_wanandroid/utils/sp_utils.dart';
 
 /// Created with Android Studio.
@@ -62,6 +60,8 @@ class _BodyViewState extends State<MePage> with WidgetsBindingObserver {
                   CircleAvatar(
                     foregroundImage: NetworkImage(
                         'https://avatars.githubusercontent.com/u/13191807?v=4'),
+                    // backgroundImage: ExactAssetImage('images/logo.png'),
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     radius: 35.0,
                   ),
                   Expanded(
@@ -178,10 +178,7 @@ class _BodyViewState extends State<MePage> with WidgetsBindingObserver {
   }
 
   void _initData() {
-    HttpManager.instance.dio
-        .get(HttpConstants.userinfo,
-            options: Options(extra: {HttpManager.ignoreException: true}))
-        .then((value) {
+    userInfo(true).then((value) {
       setState(() {
         _userData.addAll(value.data["data"]);
       });

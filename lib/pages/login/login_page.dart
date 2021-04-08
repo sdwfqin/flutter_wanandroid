@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/constants/sp_constants.dart';
-import 'package:flutter_wanandroid/http/http_constants.dart';
-import 'package:flutter_wanandroid/http/http_manager.dart';
+import 'package:flutter_wanandroid/http/api/user.dart';
 import 'package:flutter_wanandroid/utils/loading_utils.dart';
 import 'package:flutter_wanandroid/utils/sp_utils.dart';
 import 'package:flutter_wanandroid/utils/toast_utils.dart';
@@ -114,13 +112,7 @@ class _LoginState extends State<LoginPage> {
   /// 登录
   void _login(String username, String password) {
     _loadingUtils.showLoading(context);
-    var formData = FormData.fromMap({
-      'username': username,
-      'password': password,
-    });
-    HttpManager.instance.dio
-        .post(HttpConstants.login, data: formData)
-        .then((value) {
+    login(username, password).then((value) {
       showToast("登录成功");
       Navigator.pop(context);
       SpUtils.instance.setStorage(SpConstants.userData, value.data["data"]);

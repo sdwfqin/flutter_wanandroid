@@ -4,8 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/components/webview_content_page.dart';
-import 'package:flutter_wanandroid/http/http_constants.dart';
-import 'package:flutter_wanandroid/http/http_manager.dart';
+import 'package:flutter_wanandroid/http/api/home.dart';
 import 'package:flutter_wanandroid/model/banner/home_banner.dart';
 import 'package:flutter_wanandroid/model/banner/home_list_banner.dart';
 import 'package:flutter_wanandroid/model/homelist/home_list_item_bean.dart';
@@ -201,9 +200,7 @@ class _BodyViewState extends State<HomePage> {
 
   /// 加载数据
   void _getData() {
-    HttpManager.instance.dio
-        .get("article/list/$_currentPager/json")
-        .then((value) {
+    homeList(_currentPager).then((value) {
       HomeListMainBean bean = HomeListMainBean.fromJson(value.data);
       // setState 相当于 runOnUiThread
       // _refreshController 是分页组件用的
@@ -245,7 +242,7 @@ class HeadView extends StatefulWidget {
 
 class _HeadViewState extends State<HeadView> {
   List<HomeBanner> data = [];
-  int count = 1;
+  int count = 0;
 
   @override
   void initState() {
@@ -254,7 +251,7 @@ class _HeadViewState extends State<HeadView> {
   }
 
   void _getData() {
-    HttpManager.instance.dio.get(HttpConstants.banner).then((value) {
+    homeBanner().then((value) {
       HomeListBanner bean = HomeListBanner.fromJson(value.data);
       // setState 相当于 runOnUiThread
       setState(() {
@@ -269,10 +266,9 @@ class _HeadViewState extends State<HeadView> {
     return new Container(
       child: new Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return new Image.network(
-            data.length < 1
-                ? "http://via.placeholder.com/350x150"
-                : data[index].imagePath,
+          return FadeInImage.assetNetwork(
+            placeholder: 'images/placeholder.png',
+            image: data[index].imagePath,
             fit: BoxFit.fill,
           );
         },
