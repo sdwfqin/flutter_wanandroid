@@ -191,8 +191,12 @@ class _BodyViewState extends State<MePage> with WidgetsBindingObserver {
   }
 
   void _headerClick() {
-    Navigator.of(context).pushNamed('/login').then((value) {
-      _initData();
-    });
+    if (_userData.isEmpty) {
+      Navigator.of(context).pushNamed('/login').then((value) {
+        _initData();
+      });
+    } else {
+      Navigator.of(context).pushNamed('/userInfo');
+    }
   }
 }

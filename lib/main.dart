@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_wanandroid/pages/index/index_page.dart';
 import 'package:flutter_wanandroid/pages/index/splash_page.dart';
 import 'package:flutter_wanandroid/pages/login/login_page.dart';
+import 'package:flutter_wanandroid/pages/me/user_info_page.dart';
 import 'package:flutter_wanandroid/pages/system/setting_page.dart';
 import 'package:flutter_wanandroid/store/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +48,7 @@ class WanAndroid extends StatelessWidget {
         '/index': (context) => IndexPage(),
         '/login': (context) => LoginPage(),
         '/setting': (context) => SettingPage(),
+        '/userInfo': (context) => UserInfoPage(),
       },
       title: '玩Android-Flutter版',
     );
