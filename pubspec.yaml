@@ -20,7 +20,7 @@ dependencies:
   # https://github.com/flutter/plugins
 
   # 网络 https://github.com/flutterchina/dio
-  dio: ^4.0.0
+  dio: ^4.0.1
   dio_cookie_manager: ^2.0.0
   # 轮播图 https://github.com/best-flutter/flutter_swiper
   flutter_swiper : ^1.1.6

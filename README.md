@@ -23,12 +23,15 @@ https://stackoverflow.com/questions/64917744/cannot-run-with-sound-null-safety-b
 Run --> Edit Configurations --> Add Additional Run args --> --no-sound-null-safety
 or
 flutter run --no-sound-null-safety
+flutter run --no-sound-null-safety -d chrome
 ```
 
 2. 打包
 
 ```
 flutter build apk --no-sound-null-safety
+
+flutter build web --no-sound-null-safety
 ```
 
 # 截图
